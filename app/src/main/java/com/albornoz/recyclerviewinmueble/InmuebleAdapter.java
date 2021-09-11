@@ -48,11 +48,7 @@ public class InmuebleAdapter extends RecyclerView.Adapter<InmuebleAdapter.MiView
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, InmuebleDetalles.class);
-                intent.putExtra("direccion", i.getDireccion());
-                intent.putExtra("precio", i.getPrecio());
-                intent.putExtra("idFoto", i.getIdFoto());
-                intent.putExtra("cantAmbientes", i.getCantAmbientes());
-                intent.putExtra("disponible", i.isDisponible());
+                intent.putExtra("id", i.getId());
                 context.startActivity(intent);
             }
         });

@@ -4,20 +4,25 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.albornoz.recyclerviewinmueble.models.Inmueble;
+
 public class InmuebleDetalles extends AppCompatActivity {
 
+    private InmuebleViewModel iViewModel;
     private ImageView ivFoto;
     private TextView tvDireccion, tvPrecio, tvCantAmbientes, tvDisponible;
-    private Bundle extras;
+    private int idInmueble;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inmueble_detalles);
-        extras = getIntent().getExtras();
+        iViewModel = new InmuebleViewModel();
+        idInmueble = getIntent().getExtras().getInt("id");
         inicializarViews();
         cargarDetallesInmueble();
     }
@@ -31,10 +36,18 @@ public class InmuebleDetalles extends AppCompatActivity {
     }
 
     private void cargarDetallesInmueble() {
-        ivFoto.setImageResource(extras.getInt("idFoto"));
-        tvDireccion.setText("Dirección: "+extras.getString("direccion"));
-        tvPrecio.setText("Precio: "+extras.getDouble("precio"));
-        tvCantAmbientes.setText("Cantidad de ambientes: "+extras.getInt("cantAmbientes"));
-        tvDisponible.setText((extras.getBoolean("disponible")) ? "Disponible" : "No Disponible");
+        Inmueble i = iViewModel.getById(idInmueble);
+        // TODO: VER SI SE PUEDE LLEVAR EL IF AL VIEWMODEL
+        if (i != null) {
+            ivFoto.setImageResource(i.getIdFoto());
+            tvDireccion.setText("Dirección: "+i.getDireccion());
+            tvPrecio.setText("Precio: "+i.getPrecio());
+            tvCantAmbientes.setText("Cantidad de ambientes: "+i.getCantAmbientes());
+            tvDisponible.setText((i.isDisponible()) ? "Disponible" : "No Disponible");
+        } else {
+            /* TODO: HACER OTRA ACTIVITY O LLENAR LOS VIEWS CON DATOS GENÉRICOS
+            *   O HACER UN MUTABLE DATA CON ALGÚN BOOLEANO */
+            Log.d("inmueble", "cargarDetallesInmueble: No se encontró inmueble");
+        }
     }
 }

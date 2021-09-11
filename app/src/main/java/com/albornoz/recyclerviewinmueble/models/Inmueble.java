@@ -2,18 +2,28 @@ package com.albornoz.recyclerviewinmueble.models;
 
 public class Inmueble {
 
+    private int id;
     private int cantAmbientes;
     private boolean disponible;
     private String direccion;
     private double precio;
     private int idFoto;
 
-    public Inmueble(String direccion, double precio, int idFoto, int cantAmbientes, boolean disponible) {
+    public Inmueble(int id, String direccion, double precio, int idFoto, int cantAmbientes, boolean disponible) {
+        this.id = id;
         this.direccion = direccion;
         this.precio = precio;
         this.idFoto = idFoto;
         this.cantAmbientes = cantAmbientes;
         this.disponible = disponible;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDireccion() {
