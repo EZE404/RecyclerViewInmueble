@@ -1,6 +1,7 @@
 package com.albornoz.recyclerviewinmueble;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.albornoz.recyclerviewinmueble.models.Inmueble;
@@ -21,11 +23,10 @@ public class InmuebleAdapter extends RecyclerView.Adapter<InmuebleAdapter.MiView
     private List<Inmueble> inmuebles;
 
     public InmuebleAdapter(
-            LayoutInflater layoutInflater,
             Context context,
             List<Inmueble> inmuebles
     ) {
-        this.layoutInflater = layoutInflater;
+        this.layoutInflater = LayoutInflater.from(context);
         this.context = context;
         this.inmuebles = inmuebles;
     }
@@ -43,6 +44,18 @@ public class InmuebleAdapter extends RecyclerView.Adapter<InmuebleAdapter.MiView
         holder.tvDireccion.setText("Dirección: "+i.getDireccion());
         holder.tvPrecio.setText("Precio: "+i.getPrecio());
         holder.ivFoto.setImageResource(i.getIdFoto());
+        holder.cvInmueble.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, InmuebleDetalles.class);
+                intent.putExtra("direccion", i.getDireccion());
+                intent.putExtra("precio", i.getPrecio());
+                intent.putExtra("idFoto", i.getIdFoto());
+                intent.putExtra("cantAmbientes", i.getCantAmbientes());
+                intent.putExtra("disponible", i.isDisponible());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override // Retorna la cardinalidad de la lista de inmuebles
@@ -52,6 +65,7 @@ public class InmuebleAdapter extends RecyclerView.Adapter<InmuebleAdapter.MiView
 
     public class MiViewHolder extends RecyclerView.ViewHolder {
 
+        private CardView cvInmueble;
         private TextView tvDireccion, tvPrecio;
         private ImageView ivFoto;
 
@@ -61,6 +75,7 @@ public class InmuebleAdapter extends RecyclerView.Adapter<InmuebleAdapter.MiView
             tvDireccion = itemView.findViewById(R.id.tvDireccion);
             tvPrecio = itemView.findViewById(R.id.tvPrecio);
             ivFoto = itemView.findViewById(R.id.ivFoto);
+            cvInmueble = itemView.findViewById(R.id.cvInmueble);
         }
     }
 }

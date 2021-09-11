@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RecyclerViewInmueble">
         <activity
+            android:name=".InmuebleDetalles"
+            android:exported="true"
+            android:label="Detalles"
+            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:label="Inmobiliaria"
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
